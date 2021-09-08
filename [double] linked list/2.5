@@ -26,6 +26,42 @@ void print(struct Node * head)
     printf("\n");
 }
 
+struct Node * copy (struct Node * org)
+{
+    struct Node * copied, *last_node;
+    while (org != NULL)
+    {
+        struct Node * tmp = (struct Node *)malloc(sizeof(struct Node));
+        tmp->data = org->data;
+        tmp->next = NULL;
+        
+        if (copied == NULL) 
+        {
+            copied = tmp;
+            last_node = copied;
+        }
+        else
+        {
+            last_node->next = tmp;
+            last_node = tmp;
+        }
+        org = org->next;
+    }
+    return copied;
+}
+
+struct Node *copy_rec (struct Node * org)
+{
+    if (org == NULL)
+    {
+        return NULL;
+    }
+    struct Node *tmp = (struct Node *)malloc(sizeof(struct Node));
+    tmp->data = org->data;
+    tmp->next = copy_rec(org->next);
+    return tmp;
+}
+
 int main()
 {
     struct Node * head = NULL;
@@ -35,5 +71,10 @@ int main()
     }
     
     print(head);
+    
+    struct Node * copy1 = copy(head);
+    print(copy1);
+    struct Node * copy2 = copy_rec(head);
+    print(copy2);
     return 0;
 }
