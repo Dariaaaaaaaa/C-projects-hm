@@ -28,7 +28,8 @@ void print(struct Node * head)
 
 struct Node * copy (struct Node * org)
 {
-    struct Node * copied, *last_node;
+    struct Node * copied = NULL;
+    struct Node *last_node;
     while (org != NULL)
     {
         struct Node * tmp = (struct Node *)malloc(sizeof(struct Node));
