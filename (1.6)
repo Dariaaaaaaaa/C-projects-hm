@@ -29,26 +29,20 @@ void print(struct Node * head)
 
 bool is_prime(int data)
 {
-    if (data % 2 == 0)
-    {
-        return 1;
-    }
-    else
-    {
-        return 0;
-    }
+    return (data % 2 == 0);
 }
 
-int sum_of_ok(bool (*is_ok), struct Node * head)
+int sum_of_ok(bool is_prime (int), struct Node * head)
 {
     int sum = 0;
     struct Node * tmp = head;
     while (tmp != NULL)
     {
-        if (is_ok(tmp->data))
+        if (is_prime(tmp->data))
         {
             sum += 1;
         }
+        tmp = tmp->next;
     }
     return sum;
 }
@@ -65,6 +59,7 @@ int main()
     
     int ans = 0;
     ans = sum_of_ok(is_prime, head);
-    printf("%d\n")
+    printf("%d\n", ans);
+    
     return 0;
 }
