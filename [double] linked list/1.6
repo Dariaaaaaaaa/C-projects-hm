@@ -27,18 +27,18 @@ void print(struct Node * head)
     printf("\n");
 }
 
-bool is_prime(int data)
+bool is_even(int data)
 {
     return (data % 2 == 0);
 }
 
-int sum_of_ok(bool is_prime (int), struct Node * head)
+int sum_of_ok(bool is_even (int), struct Node * head)
 {
     int sum = 0;
     struct Node * tmp = head;
     while (tmp != NULL)
     {
-        if (is_prime(tmp->data))
+        if (is_even(tmp->data))
         {
             sum += 1;
         }
@@ -58,7 +58,7 @@ int main()
     print(head);
     
     int ans = 0;
-    ans = sum_of_ok(is_prime, head);
+    ans = sum_of_ok(is_even, head);
     printf("%d\n", ans);
     
     return 0;
