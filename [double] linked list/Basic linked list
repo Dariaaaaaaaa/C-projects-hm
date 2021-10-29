@@ -7,7 +7,7 @@ struct Node
     struct Node * next;
 };
 
-void add_fisrt(struct Node ** head, int data)
+void add_first(struct Node ** head, int data)
 {
     struct Node * tmp = malloc(sizeof(struct Node));
     tmp->data = data;
@@ -31,7 +31,7 @@ int main()
     struct Node * head = NULL;
     for (int i = 0; i < 10; i++)
     {
-        add_fisrt(&head, i);
+        add_first(&head, i);
     }
     
     print(head);
