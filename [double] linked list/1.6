@@ -8,7 +8,7 @@ struct Node
     struct Node * next;
 };
 
-void add_fisrt(struct Node ** head, int data)
+void addFirst(struct Node ** head, int data)
 {
     struct Node * tmp = malloc(sizeof(struct Node));
     tmp->data = data;
@@ -49,17 +49,20 @@ int sum_of_ok(bool is_even (int), struct Node * head)
 
 int main()
 {
+
     struct Node * head = NULL;
     for (int i = 0; i < 10; i++)
     {
-        add_fisrt(&head, i);
+        addFirst(&head, i);
     }
-    
+
     print(head);
-    
-    int ans = 0;
-    ans = sum_of_ok(is_even, head);
+
+    bool (*logic) (int);
+    logic = is_even;
+    int ans;
+    ans = sum_of_ok(logic, head);
     printf("%d\n", ans);
-    
+
     return 0;
 }
