@@ -1,0 +1,57 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node
+{
+    int data;
+    struct Node * next;
+};
+
+void add_first(struct Node ** head, int data)
+{
+    struct Node * tmp = malloc(sizeof(struct Node));
+    tmp->data = data;
+    tmp->next = *head;
+    *head = tmp;
+}
+
+void print(struct Node * head)
+{
+    struct Node * tmp = head;
+    while (tmp != NULL)
+    {
+        printf("%d -> ", tmp->data);
+        tmp = tmp->next;
+    }
+    printf("\n");
+}
+
+struct Node* reverse(struct Node * head)
+{
+    struct Node * tmp = head;
+    struct Node * next, * prev;
+    prev = NULL;
+    while(tmp != NULL)
+    {
+        next = tmp->next;
+        tmp->next = prev;
+        prev = tmp;
+        tmp = next;
+    }
+    head = prev;
+    return head;
+}
+
+int main()
+{
+    struct Node * head = NULL;
+    for (int i = 0; i < 10; i++)
+    {
+        add_first(&head, i);
+    }
+
+    print(head);
+    head = reverse(head);
+    print(head);
+    return 0;
+}
