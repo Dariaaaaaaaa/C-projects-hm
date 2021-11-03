@@ -1,0 +1,76 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+struct Node
+{
+    int data;
+    struct Node * next;
+};
+
+void addFirst(struct Node ** head, int data)
+{
+    struct Node * tmp = malloc(sizeof(struct Node));
+    tmp->data = data;
+    tmp->next = *head;
+    *head = tmp;
+}
+
+void print(struct Node * head)
+{
+    struct Node * tmp = head;
+    while (tmp != NULL)
+    {
+        printf("%d -> ", tmp->data);
+        tmp = tmp->next;
+    }
+    printf("\n");
+}
+
+bool is_even(struct Node * node)
+{
+    struct Node * tmp;
+    tmp = node;
+    return (tmp -> data % 2 == 0);
+}
+
+void delete(struct Node ** head, bool (*parameter) (struct  Node *))
+{
+    struct Node * t;
+    t = * head;
+    int n = 1;
+    struct Node * next, * prev;
+    while (t != NULL)
+    {
+        if (n==1 & parameter(t))
+        {
+            n++;
+            * head = (*head)->next;
+            free(t);
+        }
+        prev = t;
+        t = t->next;
+        next = t->next;
+        if(parameter(t))
+        {
+            prev->next = next;
+            free (t);
+        }
+    }
+}
+
+int main()
+{
+
+    struct Node * head = NULL;
+    for (int i = 0; i < 10; i++)
+    {
+        addFirst(&head, i);
+    }
+
+    print(head);
+    delete(&head, is_even);
+    print(head);
+
+    return 0;
+}
