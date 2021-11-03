@@ -15,27 +15,27 @@ void add_fisrt(struct Node ** head, int data)
     *head = tmp;
 }
 
-void delete(struct Node * head, int n)
+void delete(struct Node ** head, int n)
 {
-    struct Node * t = head;
-    struct Node * next = t->next;
-    struct Node * prev = t;
-    if (n>10){  
-        head = head->next;
-        printf("%d\n", head->data);
+    struct Node * t;
+    if (n==1)
+    {
+        t = * head;
+        * head = (*head)->next;
+        free(t);
     }
-    else{ 
-        for(int i = -1; i < n; i++){
-            //printf("%d -> %d -> %d\n", prev->data, t->data, next->data);
+    else
+    {
+        t = * head;
+        struct Node * next, * prev;
+        for (int i = 1; i<=n-1; i++)
+        {
             prev = t;
-            //printf("%d -> %d -> %d\n", prev->data, t->data, next->data);
-            t = t -> next;
-            //printf("%d -> %d -> %d\n", prev->data, t->data, next->data);
-            next = t -> next;
-            //printf("%d -> %d -> %d\n", prev->data, t->data, next->data);
+            t = t->next;
+            next = t->next;
         }
         prev->next = next;
-        free(t);
+        free (t);
     }
 }
 
@@ -57,9 +57,9 @@ int main()
     {
         add_fisrt(&head, i);
     }
-    
+
     print(head);
-    delete(head, 9);
+    delete(&head, 9);
     print(head);
     return 0;
 }
