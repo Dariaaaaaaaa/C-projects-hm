@@ -27,35 +27,43 @@ void print(struct Node * head)
     printf("\n");
 }
 
-bool is_even(struct Node * node)
+bool is_even(int data)
 {
-    struct Node * tmp;
-    tmp = node;
-    return (tmp -> data % 2 == 0);
+    return (data == 8);
 }
 
-void delete(struct Node ** head, bool (*parameter) (struct  Node *))
+void delete(struct Node ** head, bool (*parameter)(int))
 {
     struct Node * t;
     t = * head;
-    int n = 1;
-    struct Node * next, * prev;
-    while (t != NULL)
+    if (parameter(t->data))
     {
-        if (n==1 & parameter(t))
+        * head = (*head)->next;
+        free(t);
+    }
+    else
+    {
+        t = t ->next;
+        struct Node * next, * prev;
+        int nxt, prv, tmp;
+        tmp = t->data;
+        int n = 1;
+        while(t->next != NULL)
         {
             n++;
-            * head = (*head)->next;
-            free(t);
+            prev = t;
+            prv = prev->data;
+            t = t->next;
+            tmp = t->data;
+            next = t->next;
+            nxt =  next->data;
+            if ( parameter(t->data))
+            {
+                prev->next = next;
+                free (t);
+            }
         }
-        prev = t;
-        t = t->next;
-        next = t->next;
-        if(parameter(t))
-        {
-            prev->next = next;
-            free (t);
-        }
+
     }
 }
 
