@@ -8,12 +8,45 @@ struct Node
     struct Node * next;
 };
 
-void addFirst(struct Node ** head, int data)
+void add_first(struct Node ** head, int data)
 {
     struct Node * tmp = malloc(sizeof(struct Node));
     tmp->data = data;
     tmp->next = *head;
     *head = tmp;
+}
+
+bool is_even(int data)
+{
+    return (data % 2 == 0);
+}
+
+void deleteKey(struct Node ** head, bool (*parameter)(int))
+{
+    struct Node * t = * head;
+    struct Node * prev;
+    while (t != NULL && parameter(t->data))
+    {
+        * head = t->next;
+        free(t);
+        t = *head;
+    }
+    while(t != NULL)
+    {
+        while(t != NULL && !parameter(t->data))
+        {
+            prev = t;
+            t = t->next;
+        }
+        if (t == NULL)
+        {
+            return;
+        }
+        prev->next = t->next;
+        free (t);
+        t = prev->next;
+    }
+
 }
 
 void print(struct Node * head)
@@ -27,58 +60,16 @@ void print(struct Node * head)
     printf("\n");
 }
 
-bool is_even(int data)
-{
-    return (data == 8);
-}
-
-void delete(struct Node ** head, bool (*parameter)(int))
-{
-    struct Node * t;
-    t = * head;
-    if (parameter(t->data))
-    {
-        * head = (*head)->next;
-        free(t);
-    }
-    else
-    {
-        t = t ->next;
-        struct Node * next, * prev;
-        int nxt, prv, tmp;
-        tmp = t->data;
-        int n = 1;
-        while(t->next != NULL)
-        {
-            n++;
-            prev = t;
-            prv = prev->data;
-            t = t->next;
-            tmp = t->data;
-            next = t->next;
-            nxt =  next->data;
-            if ( parameter(t->data))
-            {
-                prev->next = next;
-                free (t);
-            }
-        }
-
-    }
-}
-
 int main()
 {
-
     struct Node * head = NULL;
     for (int i = 0; i < 10; i++)
     {
-        addFirst(&head, i);
+        add_first(&head, i);
     }
 
     print(head);
-    delete(&head, is_even);
+    deleteKey(&head, is_even);
     print(head);
-
     return 0;
 }
