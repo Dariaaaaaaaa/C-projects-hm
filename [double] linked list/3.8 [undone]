@@ -1,0 +1,52 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node
+{
+    int data;
+    struct Node * next;
+};
+
+void add_first(struct Node ** head, int data)
+{
+    struct Node * tmp = malloc(sizeof(struct Node));
+    tmp->data = data;
+    tmp->next = *head;
+    *head = tmp;
+}
+
+
+void print(struct Node * head)
+{
+    struct Node * tmp = head;
+    while (tmp != NULL)
+    {
+        printf("%d -> ", tmp->data);
+        tmp = tmp->next;
+    }
+    printf("\n");
+}
+
+struct Node * merge(struct Node * h1, struct Node * h2)
+{
+    
+}
+
+int main()
+{
+    struct Node * head1 = NULL;
+    for (int i = 0; i < 10; i++)
+    {
+        add_first(&head1, 13*i - 2^i);
+    }
+
+    struct Node * head2 = NULL;
+    for (int i = 0; i < 10; i++)
+    {
+        add_first(&head2, 17*i - 3^i);
+    }
+
+    print(head1);
+    print(head2);
+    return 0;
+}
