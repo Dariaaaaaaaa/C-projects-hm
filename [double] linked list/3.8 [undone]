@@ -29,7 +29,23 @@ void print(struct Node * head)
 
 struct Node * merge(struct Node * h1, struct Node * h2)
 {
-    
+    struct Node * tmp1 = h1;
+    struct Node * tmp2 = h2;
+    struct Node * result;
+    while (tmp1 != NULL)
+    {
+        while (tmp2 != NULL)
+        {
+            if (tmp1->data >= tmp2->data)
+            {
+                add_first(&result, tmp1->data);
+            }
+
+            tmp2=tmp2->next;
+        }
+        tmp1=tmp1->next;
+    }
+    return result;
 }
 
 int main()
