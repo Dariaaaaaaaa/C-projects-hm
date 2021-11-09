@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 struct Node
 {
@@ -36,14 +37,22 @@ struct Node * merge(struct Node * h1, struct Node * h2)
     {
         while (tmp2 != NULL)
         {
-            if (tmp1->data >= tmp2->data)
+            if (tmp1 == NULL)
+            {
+                add_first(&result, tmp2->data);
+                tmp2 = tmp2->next;
+            }
+            if (tmp1->data < tmp2->data)
             {
                 add_first(&result, tmp1->data);
+                tmp1=tmp1->next;
             }
-
-            tmp2=tmp2->next;
+            else
+            {
+                add_first(&result, tmp2->data);
+                tmp2=tmp2->next;
+            }
         }
-        tmp1=tmp1->next;
     }
     return result;
 }
@@ -51,18 +60,24 @@ struct Node * merge(struct Node * h1, struct Node * h2)
 int main()
 {
     struct Node * head1 = NULL;
-    for (int i = 0; i < 10; i++)
-    {
-        add_first(&head1, 13*i - 2^i);
-    }
+    add_first(&head1, 26);
+    add_first(&head1, 12);
+    add_first(&head1, 7);
+    add_first(&head1, 3);
+    add_first(&head1, 1);
 
     struct Node * head2 = NULL;
-    for (int i = 0; i < 10; i++)
-    {
-        add_first(&head2, 17*i - 3^i);
-    }
+    add_first(&head2, 55);
+    add_first(&head2, 24);
+    add_first(&head2, 14);
+    add_first(&head2, 8);
+    add_first(&head2, 5);
+    add_first(&head2, 4);
 
     print(head1);
     print(head2);
+
+    struct Node * new = merge(head1, head2);
+    print(new);
     return 0;
 }
