@@ -16,6 +16,19 @@ void add_first(struct Node ** head, int data)
     *head = tmp;
 }
 
+void add_last(struct Node ** head, int data)
+{
+    struct Node * tmp = malloc(sizeof(struct Node));
+    tmp->data = data;
+    tmp->next = NULL;
+    struct Node * ptr = *head;
+    while (ptr != NULL)
+    {
+        ptr = ptr->next;
+    }
+    ptr->next = tmp;
+}
+
 
 void print(struct Node * head)
 {
@@ -32,26 +45,57 @@ struct Node * merge(struct Node * h1, struct Node * h2)
 {
     struct Node * tmp1 = h1;
     struct Node * tmp2 = h2;
-    struct Node * result;
-    while (tmp1 != NULL)
+    struct Node * result = NULL;
+    if (tmp1 == NULL && tmp2 == NULL)
     {
-        while (tmp2 != NULL)
+        return result;
+    }
+    if (tmp1 == NULL)
+    {
+        return tmp2;
+    }
+    if (tmp2 == NULL)
+    {
+        return  tmp1;
+    }
+    while (tmp1 != NULL && tmp2 != NULL)
+    {
+        if (tmp1->data > tmp2->data)
         {
-            if (tmp1 == NULL)
+            add_last(&result, tmp2->data);
+            tmp2 = tmp2->next;
+        }
+        if (tmp2 == NULL)
+        {
+            while (tmp1 != NULL)
             {
-                add_first(&result, tmp2->data);
+                add_last(&result, tmp1->data);
+                tmp1 = tmp1->next;
+            }
+        }
+        if (tmp1->data < tmp2->data)
+        {
+            add_last(&result, tmp1->data);
+            tmp1 = tmp1->next;
+        }
+        if (tmp1 ==NULL)
+        {
+            while (tmp2 != NULL)
+            {
+                add_last(&result, tmp2->data);
                 tmp2 = tmp2->next;
             }
-            if (tmp1->data < tmp2->data)
-            {
-                add_first(&result, tmp1->data);
-                tmp1=tmp1->next;
-            }
-            else
-            {
-                add_first(&result, tmp2->data);
-                tmp2=tmp2->next;
-            }
+        }
+        //спросить почему нельзя if (tmp1->data == tmp2->data && tmp1 == NULL)
+        if (tmp1 == NULL && tmp2 == NULL)
+        {
+            break;
+        }
+        if (tmp1->data == tmp2->data)
+        {
+            add_last(&result, tmp1->data);
+            tmp1 = tmp1->next;
+            tmp2 = tmp2->next;
         }
     }
     return result;
