@@ -19,16 +19,20 @@ void add_first(struct Node ** head, int data)
 void add_last(struct Node ** head, int data)
 {
     struct Node * tmp = malloc(sizeof(struct Node));
+    struct Node * ptr = *head;
     tmp->data = data;
     tmp->next = NULL;
-    struct Node * ptr = *head;
-    while (ptr != NULL)
+    if(*head == NULL){
+        *head = tmp;
+        return;
+    }
+    while (ptr->next != NULL)
     {
         ptr = ptr->next;
     }
     ptr->next = tmp;
+    return;
 }
-
 
 void print(struct Node * head)
 {
