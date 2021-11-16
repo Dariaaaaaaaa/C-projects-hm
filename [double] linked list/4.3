@@ -1,0 +1,76 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct DNode
+{
+    int data;
+    struct DNode* prev;
+    struct DNode* next;
+};
+
+void add_first(struct DNode ** head, struct DNode ** tail, int data)
+{
+    struct DNode * tmp;
+    tmp = (struct DNode *) malloc(sizeof(struct DNode));
+    tmp->data = data;
+    tmp->next = *head;
+    tmp->prev = NULL;
+    if (*head == NULL){
+        *tail = tmp;
+    }
+    else{
+        (*head)->prev = tmp;
+    }
+    *head = tmp;
+}
+
+void delete(struct DNode ** head, struct DNode * node)
+{
+    struct DNode *ptr;
+    ptr = *head;
+    struct DNode* prev;
+    if (ptr != NULL && ptr == node)
+    {
+        *head = (*head)->next;
+        (*head)->prev = NULL;
+        free(ptr);
+        return;
+    }
+    if (node->next != NULL){
+        (node->next)->prev = node->prev;
+    }
+    if (node->prev != NULL)
+    {
+        
+    }
+
+    prev->next = ptr->next;
+    (ptr->next)->prev = prev;
+
+    if ()
+    free(ptr);
+}
+
+void print(struct DNode *head)
+{
+    struct DNode* ptr = head;
+    while (ptr->next != NULL){
+        printf("%d <-> ", ptr->data);
+        ptr = ptr->next;
+    }
+    printf("%d", ptr->data);
+    printf("\n");
+}
+
+int main()
+{
+    struct DNode * head = NULL;
+    struct DNode * tail = NULL;
+    for (int i = 0; i<10; i++){
+        add_first(&head, &tail, i);
+    }
+    print(head);
+    delete(&head, ((head->next)->next));
+    print(head);
+    return 0;
+}
