@@ -1,1 +1,36 @@
-lkd
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+struct Stack{
+    int data;
+    struct Stack * next;
+};
+
+void push(struct Stack ** tail, int x)
+{
+    struct Stack * tmp = (struct Stack*)malloc(sizeof (struct Stack));
+    tmp->data = x;
+    tmp->next = *tail;
+    *tail = tmp;
+}
+
+bool empty(struct Stack * tail)
+{
+
+}
+
+struct Stack * pop(struct Stack ** tail)
+{
+    struct Stack * tmp = *tail;
+    if (*tail != NULL){
+        free(*tail);
+    }
+    return tmp;
+}
+
+int main()
+{
+
+    return 0;
+}
