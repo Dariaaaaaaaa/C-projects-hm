@@ -26,29 +26,19 @@ void add_first(struct DNode ** head, struct DNode ** tail, int data)
 
 void delete(struct DNode ** head, struct DNode * node)
 {
-    struct DNode *ptr;
-    ptr = *head;
-    struct DNode* prev;
-    if (ptr != NULL && ptr == node)
+    if (*head != NULL && *head == node)
     {
-        *head = (*head)->next;
-        (*head)->prev = NULL;
-        free(ptr);
-        return;
+        *head = node->next;
     }
     if (node->next != NULL){
-        (node->next)->prev = node->prev;
+        node->next->prev = node->prev;
     }
     if (node->prev != NULL)
     {
-        
+        node->prev->next = node->next;
     }
 
-    prev->next = ptr->next;
-    (ptr->next)->prev = prev;
-
-    if ()
-    free(ptr);
+    free(node);
 }
 
 void print(struct DNode *head)
