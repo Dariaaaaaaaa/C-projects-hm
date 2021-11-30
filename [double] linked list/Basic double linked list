@@ -1,47 +1,81 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
-struct DNode
-{
+struct Node{
     int data;
-    struct DNode* prev;
-    struct DNode* next;
+    struct Node * next;
+    struct Node *prev;
 };
 
-void add_first(struct DNode ** head, struct DNode ** tail, int data)
+void push( struct Node ** head, int x )
 {
-    struct DNode * tmp;
-    tmp = (struct DNode *) malloc(sizeof(struct DNode));
-    tmp->data = data;
+    struct Node * tmp = (struct Node*)malloc(sizeof (struct Node *));
+    tmp->data = x;
     tmp->next = *head;
     tmp->prev = NULL;
-    if (*head == NULL){
-        *tail = tmp;
-    }
-    else{
-        (*head)->prev = tmp;
-    }
     *head = tmp;
 }
 
-void print(struct DNode *head)
+bool empty( struct Node * head )
 {
-    struct DNode* ptr = head;
-    while (ptr->next != NULL){
-        printf("%d <-> ", ptr->data);
-        ptr = ptr->next;
+    if (head == NULL)
+    {
+        return true;
     }
-    printf("%d", ptr->data);
-    printf("\n");
+    return false;
+}
+
+struct Node * pop( struct Node ** head )
+{
+    struct Node * tmp = * head;
+    if (*head == NULL)
+    {
+        printf("No return, stack empty :(");
+        return NULL;
+    }
+    *head = (*head)->next;
+    (*head)->prev = NULL;
+    tmp->next = NULL;
+    tmp->prev = NULL;
+    return tmp;
+}
+
+void printStack(struct Node * head)
+{
+    struct Node * tmp = head;
+    while (tmp->next != NULL)
+    {
+        printf("%d <-> ", tmp->data);
+        tmp = tmp->next;
+    }
+    printf("%d \n", tmp->data);
+    return;
 }
 
 int main()
 {
-    struct DNode * head = NULL;
-    struct DNode * tail = NULL;
-    for (int i = 0; i<10; i++){
-        add_first(&head, &tail, i);
+    struct Node * example;
+    example = NULL;
+    push(&example, 25);
+    push(&example, 76);
+    push(&example, 10);
+    printStack(example);
+
+    struct Node * x = pop(&example);
+    printStack(x);
+    printStack(example);
+
+    if(empty(x))
+    {
+        printf("Oh no, stack x is empty");
     }
-    print(head);
+
+    struct Node * y = NULL;
+    if(empty(y))
+    {
+        printf("Oh no, stack y is empty");
+    }
+
     return 0;
 }
