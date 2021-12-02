@@ -1,0 +1,67 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node{
+    int data;
+    struct Node * left;
+    struct Node * right;
+};
+
+struct Node * newNode(int data)
+{
+    struct Node * tmp = (struct Node*)malloc(sizeof(struct Node));
+    tmp->data = data;
+    tmp->left = NULL;
+    tmp->right = NULL;
+    return tmp;
+}
+
+void printTree(struct Node * root, int d)
+{
+    if (root == NULL)
+    {
+        return;
+    }
+    printTree(root->right, d+3);
+
+    for (int i = 0; i < d; i++) {
+        printf(" ");
+    }
+    printf("%d\n", root->data);
+    printTree(root->left, d+3);
+}
+
+struct Node * firstTask(struct Node  * root)
+{
+    while (root->right != NULL){
+        root = root->right;
+    }
+    return root;
+}
+
+int secondTask(struct Node * root)
+{
+    if (root == NULL)
+    {
+        return 0;
+    }
+    return 1 + secondTask(root->right) + secondTask(root->left);
+}
+
+int main()
+{
+    struct Node * root = newNode(10);
+    root->left = newNode(15);
+    root->right = newNode(46);
+    root->right->right = newNode(89);
+    root->left->left = newNode(45);
+    root->left->right = newNode(32);
+
+    printTree(root, 0);
+
+    printf("\n");
+    printf("Most right child - %d\n", firstTask(root)->data);
+    printf("%d\n", secondTask(root));
+
+    return 0;
+}
